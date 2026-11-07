@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Climore – o tempo, sem complicação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F8FB; --surface:#FFFFFF; --ink:#112A3E; --muted:#5C7285; --line:#DCE6EE;
+  --accent:#E8A317; --cool:#2C7A8C; --hero-a:#CFE6F5; --hero-b:#F4F8FB;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#0C1A27;--surface:#132535;--ink:#E8F1F7;--muted:#93A9BA;--line:#223A4D;--accent:#F2B84B;--cool:#6CC1D1;--hero-a:#173149;--hero-b:#0C1A27;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#0C1A27;--surface:#132535;--ink:#E8F1F7;--muted:#93A9BA;--line:#223A4D;--accent:#F2B84B;--cool:#6CC1D1;--hero-a:#173149;--hero-b:#0C1A27;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.logo{font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.logo i{width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:8px 4px 0 -2px var(--cool)}
+nav a{color:var(--muted);text-decoration:none;margin-left:20px;font-weight:500;font-size:.95rem}
+nav a:hover,nav a:focus-visible{color:var(--ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cool);outline-offset:3px;border-radius:6px}
+.hero{background:linear-gradient(180deg,var(--hero-a),var(--hero-b));border-radius:0 0 32px 32px;padding-bottom:36px}
+.hero .wrap{padding-top:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 28px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 .9rem var(--body);padding:8px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.now{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:end}
+.city{font-size:1.1rem;color:var(--muted);margin:0}
+.temp{font-family:var(--display);font-weight:700;font-size:clamp(5.5rem,20vw,11rem);line-height:.9;letter-spacing:-.05em;margin:4px 0 8px}
+.temp sup{font-size:.35em;font-weight:500;vertical-align:top;position:relative;top:.25em;color:var(--accent)}
+.cond{font-family:var(--display);font-size:1.6rem;font-weight:500;margin:0 0 4px}
+.sub{color:var(--muted);margin:0;max-width:44ch}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.fact span{display:block;color:var(--muted);font-size:.85rem}
+.fact b{font-family:var(--display);font-size:1.5rem;font-weight:500}
+section{padding:48px 0 0}
+h2{font-family:var(--display);font-size:1.6rem;letter-spacing:-.02em;margin:0 0 16px}
+.hours{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+.hour{flex:0 0 74px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 6px}
+.hour small{color:var(--muted)}
+.hour .ic{font-size:1.5rem;margin:6px 0}
+.hour b{font-weight:600}
+.days{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:6px 20px}
+.day{display:grid;grid-template-columns:70px 34px 1fr 70px;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.day:last-child{border:0}
+.day .lo{color:var(--muted);text-align:right}.day .hi{font-weight:600}
+.bar{position:relative;height:8px;border-radius:8px;background:var(--line)}
+.bar i{position:absolute;top:0;bottom:0;border-radius:8px;background:linear-gradient(90deg,var(--cool),var(--accent))}
+.rng{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.feat h3{font-family:var(--display);font-size:1.15rem;margin:0 0 6px}
+.feat p{color:var(--muted);margin:0}
+footer{margin-top:64px;border-top:1px solid var(--line);padding:24px 0 36px;color:var(--muted);font-size:.9rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.hero .anim{animation:rise .6s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.hero .anim{animation:none}}
+@media (max-width:760px){.now{grid-template-columns:1fr}.feat{grid-template-columns:1fr}nav a:not(:last-child){display:none}.day{grid-template-columns:56px 30px 1fr 64px}}
+
+.search{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.search input{flex:1 1 220px;min-width:0;font:500 1rem var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 16px}
+.search input:focus-visible{outline:2px solid var(--cool);outline-offset:2px}
+.btn{font:600 .95rem var(--body);border:0;border-radius:999px;padding:10px 18px;cursor:pointer;background:var(--ink);color:var(--bg)}
+.btn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.msg{color:var(--muted);margin:0 0 12px;min-height:1.4em}
+.facts{grid-template-columns:1fr 1fr}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="wrap">
+    <header class="top">
+      <div class="logo"><i></i>Climore</div>
+      <nav><a href="#horas">Hoje</a><a href="#dias">Próximos dias</a><a href="#sobre">Sobre</a></nav>
+    </header>
+    <form class="search" id="form" role="search">
+      <input id="q" type="search" placeholder="Buscar cidade" aria-label="Buscar cidade" autocomplete="off">
+      <button class="btn" type="submit">Buscar</button>
+      <button class="btn alt" type="button" id="geo">Usar minha localização</button>
+    </form>
+    <p class="msg" id="msg" role="status"></p>
+    <div class="chips" id="chips" role="group" aria-label="Cidades rápidas"></div>
+    <div class="now anim" aria-live="polite">
+      <div>
+        <p class="city" id="city"></p>
+        <p class="temp" id="temp"></p>
+        <p class="cond" id="cond"></p>
+        <p class="sub" id="sub"></p>
+      </div>
+      <div class="facts" id="facts"></div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="horas"><h2>Hora a hora</h2><div class="hours" id="hours"></div></section>
+  <section id="dias"><h2>Próximos 7 dias</h2><div class="days" id="days"></div></section>
+  <section id="sobre">
+    <div class="feat">
+      <div><h3>Direto ao ponto</h3><p>Temperatura, chance de chuva e vento logo na primeira tela, sem rolar.</p></div>
+      <div><h3>Leitura rápida</h3><p>A barra de cada dia mostra a mínima e a máxima de uma olhada.</p></div>
+      <div><h3>Claro ou escuro</h3><p>O Climore acompanha o tema do seu aparelho.</p></div>
+    </div>
+  </section>
+  <footer><span>© 2026 Climore</span><span>Dados ao vivo de Open-Meteo.com (uso não comercial).</span></footer>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const CITIES=[["Ibiúna",-23.6564,-47.2231],["São Paulo",-23.5505,-46.6333],["Rio de Janeiro",-22.9068,-43.1729],["Curitiba",-25.4284,-49.2733],["Porto Alegre",-30.0346,-51.2177]];
+const WMO={0:["Céu limpo","☀️","🌙"],1:["Quase limpo","🌤️","🌙"],2:["Parcialmente nublado","⛅","☁️"],3:["Nublado","☁️","☁️"],45:["Neblina","🌫️","🌫️"],48:["Neblina","🌫️","🌫️"],51:["Garoa fraca","🌦️","🌧️"],53:["Garoa","🌦️","🌧️"],55:["Garoa forte","🌧️","🌧️"],56:["Garoa gelada","🌧️","🌧️"],57:["Garoa gelada","🌧️","🌧️"],61:["Chuva fraca","🌦️","🌧️"],63:["Chuva","🌧️","🌧️"],65:["Chuva forte","🌧️","🌧️"],66:["Chuva gelada","🌧️","🌧️"],67:["Chuva gelada","🌧️","🌧️"],71:["Neve fraca","🌨️","🌨️"],73:["Neve","🌨️","🌨️"],75:["Neve forte","❄️","❄️"],77:["Grãos de neve","🌨️","🌨️"],80:["Pancadas de chuva","🌦️","🌧️"],81:["Pancadas de chuva","🌧️","🌧️"],82:["Pancadas fortes","⛈️","⛈️"],85:["Pancadas de neve","🌨️","🌨️"],86:["Pancadas de neve","🌨️","🌨️"],95:["Tempestade","⛈️","⛈️"],96:["Tempestade com granizo","⛈️","⛈️"],99:["Tempestade com granizo","⛈️","⛈️"]};
+const w=(c,day=1)=>{const x=WMO[c]||["—","🌡️","🌡️"];return {t:x[0],i:day?x[1]:x[2]}};
+const DN=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+let current=CITIES[0];
+const r=n=>Math.round(n);
+const say=t=>$("msg").textContent=t;
+
+function sub(c,p){
+  if(p>=60) return "Leve o guarda-chuva, a chuva é provável hoje.";
+  if(c.wind_speed_10m>=30) return "Vento forte. A sensação pode ser mais fria.";
+  if(c.temperature_2m>=30) return "Dia quente. Hidrate-se e use protetor solar.";
+  if(c.temperature_2m<=12) return "Está frio. Vale uma blusa a mais.";
+  return "Tempo estável, sem grandes surpresas.";
+}
+
+async function load(name,lat,lon){
+  current=[name,lat,lon];
+  document.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",b.textContent===name));
+  $("city").textContent=name; say("Carregando previsão…");
+  const u="https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+
+    "&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day"+
+    "&hourly=temperature_2m,weather_code,is_day,precipitation_probability"+
+    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max"+
+    "&timezone=auto&forecast_days=7";
+  try{
+    const res=await fetch(u); if(!res.ok) throw new Error(res.status);
+    const d=await res.json(); draw(name,d); say("Atualizado às "+d.current.time.slice(11,16)+" (horário local da cidade).");
+  }catch(e){ say("Não foi possível carregar a previsão. Verifique sua conexão e tente de novo."); console.error(e); }
+}
+
+function draw(name,d){
+  const c=d.current, dy=d.daily, hr=d.hourly, cur=w(c.weather_code,c.is_day);
+  $("temp").innerHTML=r(c.temperature_2m)+"<sup>°</sup>";
+  $("cond").textContent=cur.i+" "+cur.t;
+  const pr=dy.precipitation_probability_max[0]??0;
+  $("sub").textContent=sub(c,pr);
+  $("facts").innerHTML=[["Sensação",r(c.apparent_temperature)+"°"],["Umidade",c.relative_humidity_2m+"%"],["Vento",r(c.wind_speed_10m)+" km/h"],["Chance de chuva",pr+"%"],["Máxima hoje",r(dy.temperature_2m_max[0])+"°"],["Índice UV",r(dy.uv_index_max[0])]]
+    .map(f=>`<div class="fact"><span>${f[0]}</span><b>${f[1]}</b></div>`).join("");
+  const now=c.time.slice(0,13); let i=hr.time.findIndex(t=>t.slice(0,13)>=now); if(i<0)i=0;
+  let h="";
+  for(let k=i;k<i+12&&k<hr.time.length;k++){
+    const x=w(hr.weather_code[k],hr.is_day[k]);
+    h+=`<div class="hour"><small>${hr.time[k].slice(11,13)}h</small><div class="ic" aria-hidden="true" title="${x.t}">${x.i}</div><b>${r(hr.temperature_2m[k])}°</b></div>`;
+  }
+  $("hours").innerHTML=h;
+  const mn=Math.min(...dy.temperature_2m_min),mx=Math.max(...dy.temperature_2m_max),span=(mx-mn)||1;
+  $("days").innerHTML=dy.time.map((t,k)=>{
+    const lo=dy.temperature_2m_min[k],hi=dy.temperature_2m_max[k],x=w(dy.weather_code[k]);
+    const label=k===0?"Hoje":DN[new Date(t+"T12:00").getDay()];
+    return `<div class="day"><span>${label}</span><span aria-hidden="true" title="${x.t}">${x.i}</span><div class="bar"><i style="left:${(lo-mn)/span*100}%;width:${Math.max((hi-lo)/span*100,4)}%"></i></div><div class="rng"><span class="lo">${r(lo)}°</span><span class="hi">${r(hi)}°</span></div></div>`;
+  }).join("");
+}
+
+$("chips").innerHTML=CITIES.map(c=>`<button class="chip" type="button">${c[0]}</button>`).join("");
+$("chips").addEventListener("click",e=>{if(e.target.classList.contains("chip")){const c=CITIES.find(x=>x[0]===e.target.textContent);load(...c)}});
+
+$("form").addEventListener("submit",async e=>{
+  e.preventDefault(); const q=$("q").value.trim(); if(!q) return;
+  say("Buscando…");
+  try{
+    const res=await fetch("https://geocoding-api.open-meteo.com/v1/search?count=1&language=pt&name="+encodeURIComponent(q));
+    const j=await res.json();
+    if(!j.results||!j.results.length){ say("Nenhuma cidade encontrada para “"+q+"”. Tente outro nome."); return }
+    const p=j.results[0]; load([p.name,p.admin1].filter(Boolean).join(", "),p.latitude,p.longitude);
+  }catch(err){ say("Não foi possível buscar agora. Tente de novo.") }
+});
+
+$("geo").addEventListener("click",()=>{
+  if(!navigator.geolocation){ say("Seu navegador não permite localização."); return }
+  say("Obtendo sua localização…");
+  navigator.geolocation.getCurrentPosition(p=>load("Sua localização",p.coords.latitude,p.coords.longitude),
+    ()=>say("Não foi possível acessar sua localização. Permita o acesso ou busque pelo nome da cidade."));
+});
+
+load(...CITIES[0]);
+</script>
+</body>
+</html>
